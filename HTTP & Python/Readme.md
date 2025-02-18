@@ -1,4 +1,3 @@
-
 # Mise en place d'un Serveur HTTP Python avec CGI
 
 Ce document décrit comment configurer un serveur HTTP simple en Python avec le support de CGI (Common Gateway Interface), permettant de servir du contenu dynamique.
@@ -11,79 +10,105 @@ Ce document décrit comment configurer un serveur HTTP simple en Python avec le 
 
 ## Étapes
 
-1.  **Créer un script CGI (exemple : `hello.py`) :**
+### 1. Créer un script CGI (exemple : `hello.py`)
 
-    Utilisez un éditeur de texte pour créer un fichier `hello.py` 
+Utilisez un éditeur de texte pour créer un fichier `hello.py`. Voici un exemple de script de base :
 
-2.  **Rendre le script exécutable :**
+```python
+#!/usr/bin/env python3
+print("Content-type: text/html\n")
+print("<html><body><h1>Hello, World!</h1></body></html>")
+```
 
-    Dans un terminal, naviguez jusqu'au répertoire contenant le fichier `hello.py` et exécutez :
+Ce script génère une simple page HTML contenant le texte "Hello, World!".
 
-    ```
-    chmod +x hello.py
-    ```
+### 2. Rendre le script exécutable
 
-    Cela permet au serveur d'exécuter le script CGI.
+Dans un terminal, naviguez jusqu'au répertoire contenant le fichier `hello.py` et exécutez la commande suivante pour rendre le script exécutable :
 
-3.  **Démarrer le serveur HTTP avec CGI :**
+```bash
+chmod +x hello.py
+```
 
-    Dans le même répertoire, exécutez la commande :
+Cela permet au serveur d'exécuter le script CGI.
 
-    ```
-    python3 -m http.server --cgi
-    ```
+### 3. Démarrer le serveur HTTP avec CGI
 
-    ![Console montrant le serveur HTTP démarré](images/image-4.png)
+Dans le même répertoire, exécutez la commande suivante pour démarrer un serveur HTTP simple avec le support de CGI :
 
-    *   `python3 -m http.server` : Lance le module `http.server` pour créer un serveur HTTP de base.
-    *   `--cgi` : Active le support des scripts CGI.
+```bash
+python3 -m http.server --cgi
+```
 
-    Vous devriez voir un message indiquant que le serveur est en cours d'exécution, par exemple `Serving at: http://0.0.0.0:8000`.
+Cela lance un serveur HTTP qui écoute sur le port 8000.
 
-4.  **Accéder au script CGI dans votre navigateur :**
+*   `python3 -m http.server` : Lance le module `http.server` pour créer un serveur HTTP de base.
+*   `--cgi` : Active le support des scripts CGI.
 
-    Ouvrez un navigateur web et entrez l'URL suivante :
+Vous devriez voir un message indiquant que le serveur est en cours d'exécution, par exemple :
 
-    ```
-    http://localhost:8000/hello.py
-    ```
+```
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+```
 
-    Si tout est configuré correctement, vous devriez voir la page "Hello, World!".
+### 4. Accéder au script CGI dans votre navigateur
 
-    ![Navigateur affichant le résultat du script hello.py](images/image-3.png)
+Ouvrez un navigateur web et entrez l'URL suivante :
+
+```
+http://localhost:8000/hello.py
+```
+
+Si tout est configuré correctement, vous devriez voir une page contenant "Hello, World!".
+
+---
 
 ## Exemple avec gestion de requêtes GET et POST
 
-Voici un exemple de serveur HTTP personnalisé qui gère les requêtes GET et POST, analyse les paramètres de requête et les données de formulaire, et gère les cookies :
+Voici un exemple de serveur HTTP personnalisé qui gère les requêtes GET et POST, analyse les paramètres de requête et les données de formulaire, et gère les cookies.
 
-1.  **Exécuter le serveur personnalisé :**
+### 1. Exécuter le serveur personnalisé
 
-    Sauvegardez le code dans un fichier nommé `web_server.py` et exécutez la commande :
+Créez un fichier `web_server.py` 
 
-    ```
-    python3 web_server.py
-    ```
+Ensuite, exécutez la commande suivante dans le terminal pour démarrer votre serveur personnalisé :
 
-    ![Console montrant le serveur web_server.py démarré](images/image-6.png)
+```bash
+python3 web_server.py
+```
 
-2.  **Accéder au serveur personnalisé dans votre navigateur :**
+Vous devriez voir un message indiquant que le serveur est en cours d'exécution :
 
-    Ouvrez un navigateur web et entrez l'URL suivante :
+```
+Server running at http://localhost:8000
+```
 
-    ```
-    http://localhost:8000
-    ```
+### 2. Accéder au serveur personnalisé dans votre navigateur
 
-    Vous devriez voir le message "Handling GET request bro !".
+Ouvrez un navigateur web et entrez l'URL suivante :
 
-    ![Navigateur affichant le message GET du serveur web_server.py](images/image-5.png)
+```
+http://localhost:8000
+```
 
-3.  **Envoyer une requête POST avec curl :**
+Vous devriez voir le message "Handling GET request bro !" s'afficher dans votre navigateur.
 
-    Utilisez `curl` pour envoyer une requête POST au serveur :
+### 3. Envoyer une requête POST avec `curl`
 
-    ```
-    curl -X POST http://localhost:8000
-    ```
+Utilisez `curl` pour envoyer une requête POST au serveur :
 
-    Vous devriez voir le message "Handling POST request bro !" apparaître également dans votre terminal de serveur.
+```bash
+curl -X POST http://localhost:8000
+```
+
+Vous devriez voir le message "Handling POST request bro !" s'afficher également dans le terminal où le serveur est exécuté.
+
+---
+
+### Résultat après changement de la fonction GET et POST :
+
+Après modification des fonctions GET et POST, vous pouvez observer les changements dans le comportement du serveur et du navigateur. Par exemple, après un envoi de requête GET, le message "Handling GET request bro !" sera visible comme suit :
+
+![Exemple de réponse GET modifiée](images/image8.png)
+
+Cela montre que le serveur répond avec un message personnalisé pour chaque type de requête.
